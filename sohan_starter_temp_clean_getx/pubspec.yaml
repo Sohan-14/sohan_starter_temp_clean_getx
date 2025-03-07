@@ -1,5 +1,5 @@
 name: sohan_starter_temp_clean_getx
-description: A sample command-line application.
+description: "A command-line tool to set up a Flutter project with predefined templates, folders, files, and dependencies."
 version: 1.0.0
 # repository: https://github.com/my_org/my_repo
 
