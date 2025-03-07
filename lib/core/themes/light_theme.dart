@@ -27,7 +27,7 @@ class LightTheme{
   LightTheme._();
   static final ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    colorScheme: ColorScheme.fromSeed(seedColor: AppLightColors.primaryColor),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppLightColors.primaryColor).copyWith( brightness: Brightness.light),
     brightness: Brightness.light,
     primaryColor: AppLightColors.primaryColor,
     scaffoldBackgroundColor: AppLightColors.backgroundColor,
