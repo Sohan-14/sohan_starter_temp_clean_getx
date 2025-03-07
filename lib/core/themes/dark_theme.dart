@@ -27,7 +27,7 @@ class DarkTheme{
   DarkTheme._();
   static final ThemeData darkTheme = ThemeData(
     useMaterial3: true,
-    colorScheme: ColorScheme.fromSeed(seedColor: AppDarkColors.primaryColor),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppDarkColors.primaryColor).copyWith( brightness: Brightness.dark),
     brightness: Brightness.dark,
     primaryColor: AppDarkColors.primaryColor,
     scaffoldBackgroundColor: AppDarkColors.backgroundColor,
