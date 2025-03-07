@@ -13,3 +13,11 @@ dependencies:
 dev_dependencies:
   lints: ^5.0.0
   test: ^1.24.0
+
+executables:
+  sohan_starter_temp_clean_getx:
+    script: bin/sohan_starter_temp_clean_getx.dart
+
+
+homepage: "https://github.com/Sohan-14/sohan_starter_temp_clean_getx"
+repository: "https://github.com/Sohan-14/sohan_starter_temp_clean_getx"
