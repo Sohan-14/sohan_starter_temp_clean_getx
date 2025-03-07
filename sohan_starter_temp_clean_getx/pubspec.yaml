@@ -15,7 +15,7 @@ dev_dependencies:
   test: ^1.24.0
 
 executables:
-  sohan_starter_temp_clean_getx: bin/sohan_starter_temp_clean_getx
+  sohan_starter_temp_clean_getx: sohan_starter_temp_clean_getx
 
 
 
