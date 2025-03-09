@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:sohan_flutter_template/core/config/app_constants.dart';
 import 'package:sohan_flutter_template/core/enums/http_method.dart';
@@ -46,10 +48,10 @@ class NetworkService {
     T Function(Map<String, dynamic>)? fromJson,
     Map<String, dynamic>? queryParameters,
     dynamic data,
-    List<MultipartFile>? files,
+    Map<String, File>? fileFields
   }) async {
     try {
-      final response = await _sendRequest(httpMethod, endpoint, queryParameters, data, files);
+      final response = await _sendRequest(httpMethod, endpoint, queryParameters, data, fileFields);
       return _parseResponse<T>(response: response, fromJson: fromJson);
     } catch (exception) {
       LoggerUtils.error("$httpMethod request failed: $exception");
@@ -63,10 +65,10 @@ class NetworkService {
     T Function(Map<String, dynamic>)? fromJson,
     Map<String, dynamic>? queryParameters,
     dynamic data,
-    List<MultipartFile>? files,
+    Map<String, File>? fileFields
   }) async {
     try {
-      final response = await _sendRequest(httpMethod, endpoint, queryParameters, data, files);
+      final response = await _sendRequest(httpMethod, endpoint, queryParameters, data, fileFields);
       return _parseListResponse<T>(response: response, fromJson: fromJson);
     } catch (exception) {
       LoggerUtils.error("$httpMethod request failed: $exception");
@@ -80,29 +82,35 @@ class NetworkService {
       String endpoint,
       Map<String, dynamic>? queryParameters,
       dynamic data,
-      List<MultipartFile>? files,
+      Map<String, File>? fileFields
       ) async {
-      switch(httpMethod){
-        case HttpMethod.GET:
-          return await _dio.get(endpoint, queryParameters:  queryParameters);
-        case HttpMethod.POST:
-          return await _dio.post(endpoint, data: _prepareData(data, files));
-        case HttpMethod.PUT:
-          return await _dio.put(endpoint, data: _prepareData(data, files));
-        case HttpMethod.PATCH:
-          return await _dio.patch(endpoint, data: _prepareData(data, files));
-        case HttpMethod.DELETE:
-          return await _dio.delete(endpoint, queryParameters: queryParameters);
-      }
+    switch(httpMethod){
+      case HttpMethod.GET:
+        return await _dio.get(endpoint, queryParameters:  queryParameters);
+      case HttpMethod.POST:
+        return await _dio.post(endpoint, data: _prepareData(data, fileFields));
+      case HttpMethod.PUT:
+        return await _dio.put(endpoint, data: _prepareData(data, fileFields));
+      case HttpMethod.PATCH:
+        return await _dio.patch(endpoint, data: _prepareData(data, fileFields));
+      case HttpMethod.DELETE:
+        return await _dio.delete(endpoint, queryParameters: queryParameters);
+    }
   }
 
-  dynamic _prepareData(dynamic data, List<MultipartFile>? files) {
-    if (files != null && files.isNotEmpty) {
-      final formData = FormData.fromMap(data ?? {});
-      for (var file in files) {
-        formData.files.add(MapEntry("files", file,));
+  dynamic _prepareData(dynamic data,  Map<String, File>? fileFields) {
+    final formData = FormData.fromMap(data ?? {});
+
+    if (fileFields != null && fileFields.isNotEmpty) {
+      for (var entry in fileFields.entries) {
+        String fieldName = entry.key;
+        File file = entry.value;
+
+        formData.files.add(MapEntry(
+          fieldName,
+          MultipartFile.fromFileSync(file.path),
+        ));
       }
-      return formData;
     }
     return data;
   }
@@ -137,5 +145,4 @@ class NetworkService {
     }
     throw Exception("Unexpected response type: ${responseData.runtimeType}, expected List<Map<String, dynamic>>");
   }
-
 }
