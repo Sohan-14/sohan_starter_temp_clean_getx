@@ -18,7 +18,7 @@ class StorageService {
   }
 
   dynamic getData(String key) {
-    return _storage.read(key);
+    return _storage.read<String>(key);
   }
 
   Future<void> removeData(String key) async {

@@ -2,10 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sohan_flutter_template/core/config/app_constants.dart';
 import 'package:sohan_flutter_template/core/storage/storage_service.dart';
+import 'package:sohan_flutter_template/core/utils/logger_utils.dart';
 
 class ThemeManager extends GetxController {
   final StorageService _storage = StorageService();
   final Rx<ThemeMode> _themeMode = ThemeMode.system.obs;
+
+  Brightness getBrightness(BuildContext context) {
+    if (_themeMode.value == ThemeMode.system) {
+      return MediaQuery.of(context).platformBrightness;
+    }
+    return _themeMode.value == ThemeMode.dark ? Brightness.dark : Brightness.light;
+  }
+
+  bool isDarkMode(BuildContext context) {
+    return getBrightness(context) == Brightness.dark;
+  }
+
   ThemeMode get currentThemeMode => _themeMode.value;
 
   @override
@@ -48,8 +61,8 @@ class ThemeManager extends GetxController {
     } else if (mode == ThemeMode.dark) {
       themeString = AppConstants.darkMode;
     }
-    print("Stored Theme Mode: $themeString");
+    LoggerUtils.info("Stored Theme Mode: $themeString");
     _storage.saveData(AppConstants.themeMode, themeString);
-    print("Stored Theme Mode after same: ${_storage.getData(AppConstants.themeMode)}");
+    LoggerUtils.info("Stored Theme Mode after same: ${_storage.getData(AppConstants.themeMode)}");
   }
 }

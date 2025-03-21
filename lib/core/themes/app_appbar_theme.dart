@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sohan_flutter_template/core/config/app_dark_colors.dart';
 import 'package:sohan_flutter_template/core/config/app_light_colors.dart';
+import 'package:sohan_flutter_template/core/config/app_sizes.dart';
+import 'package:sohan_flutter_template/core/themes/app_text_theme.dart';
 
 class AppAppbarTheme{
   AppAppbarTheme._();
@@ -11,18 +13,14 @@ class AppAppbarTheme{
       backgroundColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
       iconTheme: IconThemeData(
-          color: AppLightColors.blackColor,
-          size: 24.0
+          color: AppLightColors.whiteColor,
+          size: AppSizes.iconMd
       ),
       actionsIconTheme: IconThemeData(
-          color:  AppLightColors.blackColor,
-          size: 24.0
+          color:  AppLightColors.whiteColor,
+          size: AppSizes.iconMd
       ),
-      titleTextStyle: TextStyle(
-          fontSize: 18.0,
-          fontWeight: FontWeight.w600,
-          color:  AppLightColors.blackColor,
-      )
+      titleTextStyle: AppTextTheme.lightTextTheme.bodyLarge
   );
 
   static AppBarTheme appBarThemeDark = AppBarTheme(
@@ -32,17 +30,13 @@ class AppAppbarTheme{
       backgroundColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
       iconTheme: IconThemeData(
-          color: AppDarkColors.blackColor,
-          size: 24.0
+          color: AppDarkColors.whiteColor,
+          size: AppSizes.iconMd
       ),
       actionsIconTheme: IconThemeData(
-          color: AppDarkColors.blackColor,
-          size: 24.0
+          color: AppDarkColors.whiteColor,
+          size: AppSizes.iconMd
       ),
-      titleTextStyle: TextStyle(
-          fontSize: 18.0,
-          fontWeight: FontWeight.w600,
-          color: AppDarkColors.blackColor,
-      )
+      titleTextStyle:  AppTextTheme.darkTextTheme.bodyLarge
   );
 }

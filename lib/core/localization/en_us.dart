@@ -2,7 +2,7 @@ import 'package:sohan_flutter_template/core/config/app_strings.dart';
 
 class EnUs {
   EnUs._();
-  static Map<String, String> translations = {
+  static Map<String, String> translations = <String, String>{
     AppStrings.hello: "Hello",
     AppStrings.secondsAgo: "seconds ago",
     AppStrings.minutesAgo: "minutes ago",

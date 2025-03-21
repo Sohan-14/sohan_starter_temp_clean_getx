@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sohan_flutter_template/core/config/app_dark_colors.dart';
 import 'package:sohan_flutter_template/core/config/app_light_colors.dart';
+import 'package:sohan_flutter_template/core/config/app_sizes.dart';
 
 class AppTabBarTheme{
   AppTabBarTheme._();
@@ -8,7 +9,7 @@ class AppTabBarTheme{
     labelColor: AppLightColors.primaryColor,
     unselectedLabelColor: AppLightColors.textSecondaryColor,
     indicator: UnderlineTabIndicator(
-      borderSide: BorderSide(color: AppLightColors.primaryColor, width: 2),
+      borderSide: BorderSide(color: AppLightColors.primaryColor, width: AppSizes.dividerLg),
     ),
   );
 
@@ -16,7 +17,7 @@ class AppTabBarTheme{
     labelColor: AppDarkColors.primaryColor,
     unselectedLabelColor: AppDarkColors.textSecondaryColor,
     indicator: UnderlineTabIndicator(
-      borderSide: BorderSide(color: AppDarkColors.primaryColor, width: 2),
+      borderSide: BorderSide(color: AppDarkColors.primaryColor, width: AppSizes.dividerLg),
     ),
   );
 

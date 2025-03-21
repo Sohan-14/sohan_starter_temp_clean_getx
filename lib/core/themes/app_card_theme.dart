@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:sohan_flutter_template/core/config/app_dark_colors.dart';
 import 'package:sohan_flutter_template/core/config/app_light_colors.dart';
+import 'package:sohan_flutter_template/core/config/app_sizes.dart';
 
 class AppCardTheme{
   AppCardTheme._();
   static const CardTheme cardThemeLight = CardTheme(
-    color: Colors.white,
+    color: AppLightColors.whiteColor,
     shadowColor: AppLightColors.shadowColor,
-    elevation: 4,
+    elevation: AppSizes.cardElevationMd,
   );
 
   static const CardTheme cardThemeDark = CardTheme(
-    color: Colors.black,
+    color: AppDarkColors.whiteColor,
     shadowColor: AppDarkColors.shadowColor,
-    elevation: 4,
+    elevation: AppSizes.cardElevationMd,
   );
 }

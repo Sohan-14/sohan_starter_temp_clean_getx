@@ -26,6 +26,7 @@ import 'package:sohan_flutter_template/core/themes/app_tooltip_theme.dart';
 class DarkTheme{
   DarkTheme._();
   static final ThemeData darkTheme = ThemeData(
+    fontFamily: "KantumruyPro",
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(seedColor: AppDarkColors.primaryColor).copyWith( brightness: Brightness.dark),
     brightness: Brightness.dark,

@@ -11,14 +11,14 @@ class SampleDto {
 
   factory SampleDto.fromJson(Map<String, dynamic> json) {
     return SampleDto(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
+      id: json['id'] as int,
+      name: json['name'] as String,
+      email: json['email'] as String,
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    return <String, dynamic>{
       'id': id,
       'name': name,
       'email': email,

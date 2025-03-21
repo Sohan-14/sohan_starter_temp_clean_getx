@@ -4,6 +4,8 @@ import 'package:sohan_flutter_template/data/data_sources/remote/remote_data_sour
 import 'package:sohan_flutter_template/data/data_sources/remote/remote_data_source_impl.dart';
 import 'package:sohan_flutter_template/data/repositories/sample_repository_impl.dart';
 import 'package:sohan_flutter_template/domain/repositories/sample_repository.dart';
+import 'package:sohan_flutter_template/presentation/controllers/navigation_controller.dart';
+
 
 class AppBindings extends Bindings{
   @override
@@ -11,5 +13,7 @@ class AppBindings extends Bindings{
     Get.put<NetworkService>(NetworkService());
     Get.lazyPut<RemoteDataSource>(() => RemoteDataSourceImpl(Get.find<NetworkService>()));
     Get.lazyPut<SampleRepository>(() => SampleRepositoryImpl(Get.find<RemoteDataSource>()));
+    Get.lazyPut<NavigationController>(() => NavigationController());
+
   }
 }

@@ -13,10 +13,10 @@ class RemoteDataSourceImpl implements RemoteDataSource{
 
   @override
   Future<List<Sample>> fetchSampleData() async {
-    final sample = await _networkService.handleListRequest<SampleDto>(
+    final List<SampleDto> sample = await _networkService.handleListRequest<SampleDto>(
       httpMethod: HttpMethod.GET,
       endpoint: AppApiEndpoints.getAllUser,
-      fromJson: (json) => SampleDto.fromJson(json),
+      fromJson: (Map<String, dynamic> json) => SampleDto.fromJson(json),
       // fromJson: (json) => SampleDto.fromJson(json),
     );
     return SampleMapper.toEntityList(sample);

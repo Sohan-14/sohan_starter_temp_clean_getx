@@ -26,6 +26,7 @@ import 'package:sohan_flutter_template/core/themes/app_tooltip_theme.dart';
 class LightTheme{
   LightTheme._();
   static final ThemeData lightTheme = ThemeData(
+    fontFamily: "KantumruyPro",
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(seedColor: AppLightColors.primaryColor).copyWith( brightness: Brightness.light),
     brightness: Brightness.light,

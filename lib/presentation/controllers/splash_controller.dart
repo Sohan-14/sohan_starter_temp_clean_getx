@@ -13,14 +13,14 @@ class SplashController extends GetxController {
   }
 
   void _navigateToNextScreen() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future<void>.delayed(const Duration(seconds: 3));
 
-    bool isLoggedIn = _storage.isDataExists(AppConstants.token);
+    final bool isLoggedIn = _storage.isDataExists(AppConstants.token);
 
     if (isLoggedIn) {
-      Get.offNamed(AppScreens.testRoute);
+      Get.offNamed<dynamic>(AppScreens.testRoute);
     } else {
-      Get.offNamed(AppScreens.testRoute);
+      Get.offNamed<dynamic>(AppScreens.testRoute);
     }
   }
 }

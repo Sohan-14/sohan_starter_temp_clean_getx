@@ -14,28 +14,30 @@ class NetworkService {
   NetworkService._internal(){
     _dio = Dio(BaseOptions(
       baseUrl: AppConstants.apiBaseUrl,
-      connectTimeout: Duration(seconds: 10),
-      receiveTimeout: Duration(seconds: 10),
-      headers: {
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+      headers: <String, dynamic>{
         "Content-Type": "application/json",
         "Accept": "application/json",
       },
     ));
 
     _dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        String? token = StorageService().getData("authToken");
+      onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
+        final dynamic data = StorageService().getData("authToken");
+        final String? token = data is String ? data : null;
+
         if (token != null && token.isNotEmpty) {
           options.headers['Authorization'] = 'Bearer $token';
         }
         LoggerUtils.debug("Request: Method = ${options.method} || Uri = ${options.uri} || Headers = ${options.headers}");
         return handler.next(options);
       },
-      onResponse: (response, handler) {
+      onResponse: (Response<dynamic> response, ResponseInterceptorHandler handler) {
         LoggerUtils.info("Response: ${response.statusCode} ${response.data}");
         return handler.next(response);
       },
-      onError: (DioException e, handler) {
+      onError: (DioException e, ErrorInterceptorHandler handler) {
         LoggerUtils.error("Error: ${e.response?.statusCode} ${e.message}");
         return handler.next(e);
       },
@@ -51,7 +53,7 @@ class NetworkService {
     Map<String, File>? fileFields
   }) async {
     try {
-      final response = await _sendRequest(httpMethod, endpoint, queryParameters, data, fileFields);
+      final Response<dynamic> response = await _sendRequest(httpMethod, endpoint, queryParameters, data, fileFields);
       return _parseResponse<T>(response: response, fromJson: fromJson);
     } catch (exception) {
       LoggerUtils.error("$httpMethod request failed: $exception");
@@ -68,7 +70,7 @@ class NetworkService {
     Map<String, File>? fileFields
   }) async {
     try {
-      final response = await _sendRequest(httpMethod, endpoint, queryParameters, data, fileFields);
+      final Response<dynamic> response = await _sendRequest(httpMethod, endpoint, queryParameters, data, fileFields);
       return _parseListResponse<T>(response: response, fromJson: fromJson);
     } catch (exception) {
       LoggerUtils.error("$httpMethod request failed: $exception");
@@ -77,7 +79,7 @@ class NetworkService {
   }
 
 
-  Future<Response> _sendRequest(
+  Future<Response<dynamic>> _sendRequest(
       HttpMethod httpMethod,
       String endpoint,
       Map<String, dynamic>? queryParameters,
@@ -99,14 +101,14 @@ class NetworkService {
   }
 
   dynamic _prepareData(dynamic data,  Map<String, File>? fileFields) {
-    final formData = FormData.fromMap(data ?? {});
+    final FormData formData = FormData.fromMap(data is Map<String, dynamic> ? data : <String, dynamic>{});
 
     if (fileFields != null && fileFields.isNotEmpty) {
-      for (var entry in fileFields.entries) {
-        String fieldName = entry.key;
-        File file = entry.value;
+      for (final MapEntry<String, File> entry in fileFields.entries) {
+        final String fieldName = entry.key;
+        final File file = entry.value;
 
-        formData.files.add(MapEntry(
+        formData.files.add(MapEntry<String, MultipartFile>(
           fieldName,
           MultipartFile.fromFileSync(file.path),
         ));
@@ -115,34 +117,44 @@ class NetworkService {
     return data;
   }
 
-  T _parseResponse<T>({required Response response, T Function(Map<String, dynamic>)? fromJson}) {
+  T _parseResponse<T>({required Response<dynamic> response, T Function(Map<String, dynamic>)? fromJson}) {
     if (response.statusCode != null && (response.statusCode! <= 200 && response.statusCode! >= 300)) {
       throw Exception("Error: ${response.statusCode}");
     }
     if (fromJson != null) {
       if (response.data is Map<String, dynamic>) {
-        return fromJson(response.data);
+        return fromJson(response.data as Map<String, dynamic>);
       }
     }
-    if (response.data is T) return response.data;
+    if (response.data is T) {
+      return response.data as T;
+    }
     throw Exception("Unexpected response type: ${response.data.runtimeType}, expected $T");
   }
 
   List<T> _parseListResponse<T>({
-    required Response response,
+    required Response<dynamic> response,
     T Function(Map<String, dynamic>)? fromJson,
   }) {
     if (response.statusCode != null && (response.statusCode! <= 200 && response.statusCode! >= 300)) {
       throw Exception("Error: ${response.statusCode}");
     }
-
-    final responseData = response.data;
+    final dynamic responseData = response.data;
 
     if (fromJson != null) {
       if (responseData is List) {
-        return responseData.map((json) => fromJson(json as Map<String, dynamic>)).toList();
+        return responseData.map((dynamic json) {
+          if (json is Map<String, dynamic>) {
+            return fromJson(json);
+          } else {
+            throw Exception("Expected Map<String, dynamic> but got ${json.runtimeType}");
+          }
+        }).toList();
+      }
+      else {
+        throw Exception("Unexpected response type: ${responseData.runtimeType}, expected List");
       }
     }
-    throw Exception("Unexpected response type: ${responseData.runtimeType}, expected List<Map<String, dynamic>>");
+    throw Exception("Error: ${response.statusCode}");
   }
 }

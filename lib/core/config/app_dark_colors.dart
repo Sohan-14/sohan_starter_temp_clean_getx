@@ -54,10 +54,10 @@ class AppDarkColors{
 
   // Neutral shades colors
   static const Color blackColor = Color(0xFF111111);
+  static const Color whiteColor = Colors.white;
+  static const Color greyColor = Color(0xFF444444);
   static const Color darkerGreyColor = Color(0xFF333333);
   static const Color darkGreyColor = Color(0xFF666666);
-  static const Color greyColor = Color(0xFF444444);
-  static const Color whiteColor = Colors.white;
 
   // Divider Colors
   static const Color dividerColor = Color(0xFFBDBDBD);

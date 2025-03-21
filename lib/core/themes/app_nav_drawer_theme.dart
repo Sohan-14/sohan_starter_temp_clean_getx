@@ -5,12 +5,12 @@ import 'package:sohan_flutter_template/core/config/app_light_colors.dart';
 class AppNavDrawerTheme{
   AppNavDrawerTheme._();
   static const NavigationDrawerThemeData navigationDrawerThemeLight = NavigationDrawerThemeData(
-    backgroundColor: Colors.white,
+    backgroundColor: AppLightColors.whiteColor,
     indicatorColor: AppLightColors.primaryColor,
   );
 
   static const NavigationDrawerThemeData navigationDrawerThemeDark = NavigationDrawerThemeData(
-    backgroundColor: Colors.black,
+    backgroundColor: AppDarkColors.whiteColor,
     indicatorColor: AppDarkColors.primaryColor,
   );
 

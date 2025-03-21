@@ -18,6 +18,10 @@ dependencies:
   permission_handler: ^11.4.0
   logger: ^2.5.0
   dio: ^5.8.0+1
+  flutter_svg: ^2.0.17
+  pin_code_fields: ^8.0.1
+  cached_network_image: ^3.4.1
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
@@ -29,7 +33,17 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
-  # fonts:
-  #   - family: Poppins
-  #     fonts:
-  #       - asset: fonts/Poppins-Regular.ttf
+
+#  fonts:
+#    - family: KantumruyPro
+#      fonts:
+#        - asset: assets/fonts/KantumruyPro-Light.ttf
+#          weight: 300
+#        - asset: assets/fonts/KantumruyPro-Regular.ttf
+#          weight: 400
+#        - asset: assets/fonts/KantumruyPro-Medium.ttf
+#          weight: 500
+#        - asset: assets/fonts/KantumruyPro-SemiBold.ttf
+#          weight: 600
+#        - asset: assets/fonts/KantumruyPro-Bold.ttf
+#          weight: 700

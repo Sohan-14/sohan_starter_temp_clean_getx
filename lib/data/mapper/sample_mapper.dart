@@ -13,7 +13,7 @@ class SampleMapper {
   }
 
   static List<Sample> toEntityList(List<SampleDto> models) {
-    return models.map((model) => Sample(
+    return models.map((SampleDto model) => Sample(
           id: model.id,
           name: model.name,
           email: model.email,
